@@ -1,5 +1,6 @@
 import logo from './logo.svg';
-import './App.css';
+import './css/App.css';
+import Children from './components/Children.js';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         >
           Learn React
         </a>
+        <Children nickName='Crivella'/>
+        <Children nickName='Capocolo'/>
       </header>
     </div>
   );
