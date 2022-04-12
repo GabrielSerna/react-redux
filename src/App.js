@@ -18,8 +18,8 @@ function App() {
         >
           Learn React
         </a>
-        <Children nickName='Crivella'/>
-        <Children nickName='Capocolo'/>
+        <Children nickName={'Crivella'} years={30}/>
+        <Children nickName={'Capocolo'} years={2}/>
       </header>
     </div>
   );
