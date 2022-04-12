@@ -8,15 +8,28 @@ class Children extends Component {
       years: this.props.years
     };
   
+  };
+  
+  time = () => {    
     setInterval(() => {
       this.handleProps();
       console.log(this.state.years);
-    }, 3000);
+    }, 2000);
   };
 
   // handle upd props
   handleProps = () => {
     this.setState((state, props) => ({years: state.years +1}));
+    if (this.state.years <= 5) {
+      if (this.state.years === 5) {
+        this.props.seniorDev(this.props.nickName)
+      }
+    }
+  };
+
+  show = (e) => {
+    console.log(e.pageX, e.pageY);
+    alert(`Hai cliccato su ${this.props.nickName}`);
   };
 
   render() {
@@ -26,30 +39,14 @@ class Children extends Component {
     // return
     return (
         <div>
-          <h2>Nome utente: {nickName}</h2>
+          <h2 onClick={this.show}>Nome utente: {nickName}</h2>
           <h3>{this.state.years >= 5 ? 'Senior Dev' : 'Junior Dev'}</h3>
           <h5>seniority: {this.state.years}</h5>
+          <button className='btn btn-primary' onClick={this.time}>Avvia conteggio</button>
       </div>
     )
   }
 }
-
-
-// const  Children = ({nickName, years}) => {
-
-//   setInterval(() => {
-//     years++;
-//     console.log(years);
-//   }, 5000);
-
-//   return (
-//     <div>
-//       <h2>Nome utente: {nickName}</h2>
-//       <h3>{years >= 5 ? 'Senior Dev' : 'Junior Dev'}</h3>
-//       <h5>seniority: {years}</h5>
-//     </div>
-//   )
-// }
 
 export default Children
 // props = { nickName: 'Capocolo' }
