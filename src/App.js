@@ -3,6 +3,7 @@ import './css/App.css';
 import Children from './components/Children.js';
 import { render } from '@testing-library/react';
 import { Component } from 'react';
+import Search from './components/search.js';
 
 export class App extends Component {
   messaggio = (nickName) => {
@@ -14,9 +15,6 @@ export class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
           <a
             className="App-link"
             href="https://reactjs.org"
@@ -25,8 +23,7 @@ export class App extends Component {
           >
             Learn React
           </a>
-          <Children nickName={'Crivella'} years={30}/>
-          <Children nickName={'Capocolo'} years={2} seniorDev={this.messaggio}/>
+          <Search name={'cerca'}/>
         </header>
       </div>
     );

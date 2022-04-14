@@ -39,6 +39,7 @@ class Children extends Component {
     // return
     return (
         <div>
+          <i className="fa-brands fa-react"></i>
           <h2 onClick={this.show}>Nome utente: {nickName}</h2>
           <h3>{this.state.years >= 5 ? 'Senior Dev' : 'Junior Dev'}</h3>
           <h5>seniority: {this.state.years}</h5>
