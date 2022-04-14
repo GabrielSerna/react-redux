@@ -6,9 +6,14 @@ import { Component } from 'react';
 import Search from './components/search.js';
 
 export class App extends Component {
-  messaggio = (nickName) => {
-    alert(`Sono ${nickName} e sono un Senior Dev`);
+  // messaggio = (nickName) => {
+  //   alert(`Sono ${nickName} e sono un Senior Dev`);
+  // };
+
+  invioFormGenitore = (cerca) => {
+    alert(`Messaggio dal genitore. Hai cercato ${cerca}`)
   };
+
 
   render() {
     return (
@@ -23,7 +28,7 @@ export class App extends Component {
           >
             Learn React
           </a>
-          <Search name={'cerca'}/>
+          <Search name='cerca' onSubmit={this.invioFormGenitore} />
         </header>
       </div>
     );
