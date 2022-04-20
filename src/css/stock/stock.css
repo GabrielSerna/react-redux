@@ -1,0 +1,13 @@
+.stock {
+  width: 700px;
+  background-color: black;
+}
+
+.col {
+  width: 25%;
+  float: left;
+}
+
+.col p {
+  color: #ccc;
+}

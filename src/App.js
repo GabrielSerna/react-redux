@@ -1,38 +1,48 @@
+import React, { Component } from 'react'
 import logo from './logo.svg';
 import './css/App.css';
-import Children from './components/Children.js';
-import { render } from '@testing-library/react';
-import { Component } from 'react';
-import Search from './components/search.js';
+import Stock from './components/stock/Stock.js';
+
 
 export class App extends Component {
-  // messaggio = (nickName) => {
-  //   alert(`Sono ${nickName} e sono un Senior Dev`);
-  // };
-
-  invioFormGenitore = (cerca) => {
-    alert(`Messaggio dal genitore. Hai cercato ${cerca}`)
+  constructor(props) {
+    super(props);
+    this.state = { nome: 'GOOGLE', valore: 300 };
+    console.log(`1g) il costruttore crea la prima istanza Genitore`);
   };
 
+  // -------MOUNTING CREAZIONE ----------
+  componentDidMount () {
+    console.log(`3g) Genitore didMount`)
+  };
 
+  // --------UPDATE AGGIORNAMENTO--------
+
+  // static getDerivedStateFromProps(np,ns) {
+  //   return null
+  // };
+
+  // componentDidUpdate() {
+  //   console.log(`4g) DidUpdate padre ${this.state.nome}`)
+  // };
+aggiornoStock = (e) => {
+  e.preventDefault()
+  this.setState({ nome: 'AMAZON' });
+};
   render() {
+    console.log(`2g) Genitore Render`)
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <Search name='cerca' onSubmit={this.invioFormGenitore} />
+          <p>
+            Applicazione Stock Exchange - <a href='/#' onClick={this.aggiornoStock}> Aggiorno </a>
+          </p>
+          <Stock nome={this.state.nome} valore={this.state.valore}/>
         </header>
       </div>
     );
   };
-}
+};
 
-export default App;
+export default App

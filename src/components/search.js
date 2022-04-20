@@ -33,6 +33,7 @@ export class search extends Component {
     return (
       <div>
         <form className='' onSubmit={this.invioDati}>
+          
           {/* INPUT */}
           <div className='form-group mx-sm-3 mb-2'>
             <input type='text' className='form-control' name='cerca' value={this.state.cerca} onChange={this.onChange} />
