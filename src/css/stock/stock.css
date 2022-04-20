@@ -1,6 +1,8 @@
 .stock {
   width: 700px;
   background-color: black;
+  margin-bottom: 10px;
+  padding: 12px;
 }
 
 .col {

@@ -4,26 +4,30 @@ class Stock extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {nome: this.props.nome, valore: this.props.valore };
+        const { nome, valore } = this.props.dati;
+        this.state = { nome, valore };
         console.log('1f) FIGLIO Creo istanza');
     };
 
     static getDerivedStateFromProps(np, ps) {
-      console.log('1fa) FIGLIO check props');
+      if (np.dati.nome !== ps.nome) {
+        return { nome: np.dati.nome, valore: np.dati.valore };
+      };
       return null;
-    }
+    };
 
     componentDidMount() {
         console.log('3f) FIGLIO DidMount ');
-    }
+    };
 
     componentDidUpdate() {
         console.log('4f) FIGLIO Update ');
-    }
+    };
 
     aggiornoStock = () => {
-        this.setState({ valore: 300 })
-    }
+      const valore = this.state.valore + 10;
+      this.setState({ valore });
+    };
 
     render() {
         console.log('2f) FIGLIO Render');
@@ -31,7 +35,7 @@ class Stock extends Component {
             <div className="stock">
                 <div className="row">
                     <div className="col">
-                        <h2>{this.props.nome}</h2>
+                        <h2>{this.props.dati.nome}</h2>
                         <p>Nasdaq</p>
                     </div>
                     <div className="col">

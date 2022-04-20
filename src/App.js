@@ -5,15 +5,26 @@ import Stock from './components/stock/Stock.js';
 
 
 export class App extends Component {
+
   constructor(props) {
     super(props);
-    this.state = { nome: 'GOOGLE', valore: 300 };
+    this.state = { listaStock: [] };
     console.log(`1g) il costruttore crea la prima istanza Genitore`);
   };
 
   // -------MOUNTING CREAZIONE ----------
   componentDidMount () {
-    console.log(`3g) Genitore didMount`)
+    const stock = [
+      {
+        nome: 'APPL',
+        valore: 200
+      },
+      {
+        nome: 'GOOG',
+        valore: 350
+      },
+    ];
+    this.setState({ listaStock: stock });
   };
 
   // --------UPDATE AGGIORNAMENTO--------
@@ -25,10 +36,22 @@ export class App extends Component {
   // componentDidUpdate() {
   //   console.log(`4g) DidUpdate padre ${this.state.nome}`)
   // };
+
 aggiornoStock = (e) => {
   e.preventDefault()
-  this.setState({ nome: 'AMAZON' });
+  const stock1 = [
+    {
+      nome: 'AMZ',
+      valore: 500
+    },
+    {
+      nome: 'MICROSOFT',
+      valore: 850
+    },
+  ];
+  this.setState({ listaStock: stock1 });
 };
+
   render() {
     console.log(`2g) Genitore Render`)
     return (
@@ -36,9 +59,10 @@ aggiornoStock = (e) => {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Applicazione Stock Exchange - <a href='/#' onClick={this.aggiornoStock}> Aggiorno </a>
+            Applicazione Stock Exchange - <a href='/#' onClick={this.aggiornoStock}> Top guadagno Aggiorno </a>
           </p>
-          <Stock nome={this.state.nome} valore={this.state.valore}/>
+          { this.state.listaStock.map(el => <Stock key={el.nome} dati={el}/>) }
+          
         </header>
       </div>
     );
