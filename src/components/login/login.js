@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import LoginService from './loginService.js'
 
 export class Login extends Component {
   constructor(props) {
@@ -6,19 +7,74 @@ export class Login extends Component {
     this.state = {
       username: '',
       password: ''
-    }
-  }
+    };
+
+    this.LoginService = new LoginService();
+
+  };
   changeText = (e) => {
     this.setState({ [e.target.name]: e.target.value })
-  }
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
-  }
+  };
+
   login = () => {
-    console.log('Login con username: ', this.state.username)
-    console.log('Login con password: ', this.state.password)
-  }
+    this.LoginService.login(this.state.username, this.state.password, this.loginSuccess, this.loginError);
+    console.log('Login con username: ', this.state.username);
+    console.log('Login con password: ', this.state.password);
+  };
+
+  loginSuccess = (dataResult) => {
+    this.setState({
+      showSuccess: true,
+      showMessage: `Login effettuato con successo, il tuo token é ${dataResult.token}`,
+      showError: false,
+      errorMessage: ''
+    });
+  };
+
+  loginError = (errorData) => {
+    this.setState({
+      showSuccess: false,
+      showMessage: ``,
+      showError: true,
+      errorMessage: `Login fallito: ${errorData.error}`
+    });
+  };
+
+  getSuccessMessage = () => {
+    if(this.state.showSuccess) {
+      return (
+        <div style={{ color: 'green' }}>
+          {this.state.successMessage}
+        </div>
+      )
+    } else {
+      return (
+        <div></div>
+      )
+    }
+  };
+
+  getErrorMessage = () => {
+    if(this.state.errorSuccess) {
+      return (
+        <div style={{ color: 'red' }}>
+          {this.state.errorMessage}
+        </div>
+      )
+    } else {
+      return (
+        <div></div>
+      )
+    }
+  };
+
   render() {
+    let successMessage = this.getSuccessMessage();
+    let errorMessage = this.getErrorMessage();
     return (
       <div style={{ marginTop: "100px", minHeight: "70vh" }}>
         <div className="container">
@@ -50,6 +106,8 @@ export class Login extends Component {
                 >
                   Invio
                 </button>
+                {successMessage}
+                {errorMessage}
               </form>
             </div>
           </div>
