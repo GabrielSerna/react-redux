@@ -11,10 +11,10 @@ export class Login extends Component {
   changeText = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
   }
-  login() {
+  login = () => {
     console.log('Login con username: ', this.state.username)
     console.log('Login con password: ', this.state.password)
   }
@@ -24,7 +24,7 @@ export class Login extends Component {
         <div className="container">
           <div className="row">
             <div className="col-6 mr-auto ml-auto">
-              <form onSubmit={this.onSubmit.bind(this)}>
+              <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
                     type="text"
@@ -46,7 +46,7 @@ export class Login extends Component {
                 <button
                   type="submit"
                   className="btn btn-primary pull-right"
-                  onClick={this.login.bind(this)}
+                  onClick={this.login}
                 >
                   Invio
                 </button>
