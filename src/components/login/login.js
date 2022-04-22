@@ -6,7 +6,11 @@ export class Login extends Component {
     super(props)
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      showSuccess: false,
+      showError: false,
+      errorMessage: '',
+      successMessage: ''
     };
 
     this.LoginService = new LoginService();
@@ -20,7 +24,7 @@ export class Login extends Component {
     e.preventDefault();
   };
 
-  login = () => {
+  login = (e) => {
     this.LoginService.login(this.state.username, this.state.password, this.loginSuccess, this.loginError);
     console.log('Login con username: ', this.state.username);
     console.log('Login con password: ', this.state.password);
@@ -29,16 +33,17 @@ export class Login extends Component {
   loginSuccess = (dataResult) => {
     this.setState({
       showSuccess: true,
-      showMessage: `Login effettuato con successo, il tuo token é ${dataResult.token}`,
+      successMessage: `Login effettuato con successo, il tuo token é ${dataResult.token}`,
       showError: false,
       errorMessage: ''
     });
+    // this.props.history.push('/booklist');
   };
 
   loginError = (errorData) => {
     this.setState({
       showSuccess: false,
-      showMessage: ``,
+      successMessage: ``,
       showError: true,
       errorMessage: `Login fallito: ${errorData.error}`
     });
@@ -50,26 +55,26 @@ export class Login extends Component {
         <div style={{ color: 'green' }}>
           {this.state.successMessage}
         </div>
-      )
+      );
     } else {
       return (
         <div></div>
-      )
-    }
+      );
+    };
   };
 
   getErrorMessage = () => {
-    if(this.state.errorSuccess) {
+    if(this.state.showError) {
       return (
         <div style={{ color: 'red' }}>
           {this.state.errorMessage}
         </div>
-      )
+      );
     } else {
       return (
         <div></div>
-      )
-    }
+      );
+    };
   };
 
   render() {
