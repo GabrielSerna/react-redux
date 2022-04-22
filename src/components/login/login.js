@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import LoginService from './loginService.js'
 
+import { createBrowserHistory } from "history";
+let history = createBrowserHistory();
+
 export class Login extends Component {
   constructor(props) {
     super(props)
@@ -37,7 +40,7 @@ export class Login extends Component {
       showError: false,
       errorMessage: ''
     });
-    // this.props.history.push('/booklist');
+    history.push('/booklist', [this.state]);
   };
 
   loginError = (errorData) => {
