@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Book1 from '../../images/book01.jpg';
-import Book2 from '../../images/book02.jpg';
-import Book3 from '../../images/book03.jpg';
-import Book4 from '../../images/book04.jpg';
+import Book1 from '../../images/book1.jpg';
+import Book2 from '../../images/book2.jpg';
+import Book3 from '../../images/book3.jpg';
+import Book4 from '../../images/book4.jpg';
 import '../../css/home/home.css';
 
 class Home extends Component {
