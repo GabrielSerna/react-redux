@@ -5,8 +5,9 @@ class Booklist extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchTerm: '',
-      books: { items: [] }
+      searchTerm: 'Ceh',
+      books: { items: [] },
+      visible: {display: 'block'}
     }
   }
 
@@ -26,6 +27,9 @@ class Booklist extends Component {
   onSubmitHandler = (e) => {
     e.preventDefault();
     this.fetchBooks();
+    this.setState({
+      visible: {display: 'none'}
+    })
   };
 
   onInputChange = (e) => {
@@ -56,7 +60,7 @@ class Booklist extends Component {
         </div>
         <div className="main" style={{ marginTop: '10px' }}>
           <div className="bookshelf" id='bookshelf'>
-            <div className="search-icon" data-reactid=".0.1.0.0">
+            <div style={this.state.visible} className="search-icon" data-reactid=".0.1.0.0">
               <i className="fas fa-search"></i>
             </div>
 
@@ -74,6 +78,8 @@ class Booklist extends Component {
                       </div>
                     </div>
                     <div className="buttons">
+                      <button style={{padding: '3px', borderRadius: '5px'}} className='btn btn-warning btn-sm'>Dettagli</button>
+                      <a href={book.volumeInfo.infoLink}>Preview</a>
                     </div>
                     <figcaption>
                       <h2>
