@@ -10,7 +10,6 @@ class Cerca extends Component {
 
   onInputChange = e => {
     this.setState({cerca: e.target.value});
-    console.log(this.state.cerca);
   };
 
   onSubmit = e => {

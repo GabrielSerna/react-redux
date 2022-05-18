@@ -53,8 +53,22 @@ export class App extends Component {
     this.setState({ listaStock: stock1 });
   };
 
-  cercaStock = str => {
-    alert(`Stai cercando ${str}`)
+  cercaElementi = str => {
+    alert(`Stai cercando ${str}`);
+    this.getElementi(str);
+  };
+
+  getElementi = str => {
+    const url = `http://api.marketstack.com/v1/eod?access_key=f03cd42f1aeb2bfaa0f1f222c9da1c3a&symbols=${str}`;
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        const { data } = res;
+        console.log(`Recupero dati ${JSON.stringify(res)}`)
+      })
+      .catch((error) => {
+        console.log(`Fetch failed`, error)
+      })
   };
 
   render() {
@@ -66,7 +80,7 @@ export class App extends Component {
           <p>
             Applicazione Stock Exchange - <a href='/#' onClick={this.aggiornoStock}> Top guadagno Aggiorno </a>
           </p>
-          <Cerca onInputSearch={this.cercaStock} />
+          <Cerca onInputSearch={this.cercaElementi} />
           { this.state.listaStock.map(el => <Stock key={el.nome} dati={el}/>) }
           
         </header>
