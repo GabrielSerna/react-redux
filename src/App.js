@@ -54,7 +54,7 @@ export class App extends Component {
   };
 
   cercaStock = str => {
-    alert(str)
+    alert(`Stai cercando ${str}`)
   };
 
   render() {

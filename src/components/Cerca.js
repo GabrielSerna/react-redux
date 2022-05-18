@@ -13,10 +13,20 @@ class Cerca extends Component {
     console.log(this.state.cerca);
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.onInputSearch(this.state.cerca);
+    this.setState({cerca: ''});
+  };
+
+  onFocus = e => {
+    e.target.blur();
+  };
+
   render() {
     return (
       <div className='row'>
-        <form className='form-inline'>
+        <form className='form-inline' onSubmit={this.onSubmit}>
           <div className='form-group'>
             <input
             type='text'
@@ -27,7 +37,7 @@ class Cerca extends Component {
             placeholder='Cerca...'
             />
           </div>
-          <button type='submit' className='btn btn-warning'>Ok</button>
+          <button type='submit' onFocus={this.onFocus} className='btn btn-warning'>Ok</button>
         </form>
       </div>
     )
