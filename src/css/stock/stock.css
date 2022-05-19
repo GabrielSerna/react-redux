@@ -1,6 +1,5 @@
 .stock {
   width: 700px;
-  background-color: #000;
   margin-bottom: 10px;
   padding: 12px;
 }
@@ -12,4 +11,4 @@
 
 .col p {
   color: #CCC;
-} 
+}

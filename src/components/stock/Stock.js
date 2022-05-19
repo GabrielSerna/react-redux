@@ -29,25 +29,32 @@ class Stock extends Component {
     this.setState({ valore });
   };
 
+  eliminoStock = () => {
+    this.props.eliminoStock(this.props.dati.symbol);
+  };
+
   render() {
     console.log('2f) FIGLIO Render');
     return (
-      <div className="stock col-md-6 m-1 p-3">
-        <div className="row">
-          <div className="col">
-            <h2>{this.props.dati.nome}</h2>
-            <p>Nasdaq</p>
-          </div>
-          <div className="col">
-            <h2>{this.state.valore}</h2>
-            <p>orario</p>
-          </div>
-          <div className="col">
-            <h2>DIFF</h2>
-            <p>percentuale</p>
-          </div>
-          <div className="col">
-            <h2 onClick={this.aggiornoStock}><i className="fas fa-sync-alt fa-2x"></i></h2>
+      <div className="stock col-md-6 p-3">
+        <div className="bodystock">
+          <i className="fas fa-times-circle closebtn" onClick={this.eliminoStock}></i>
+          <div className="row">
+            <div className="col-sm">
+              <h2 className='giallo'>{this.props.dati.symbol}</h2>
+              <p>{this.props.dati.symbol}</p>
+            </div>
+            <div className="col-sm">
+              <h2>{this.state.valore}</h2>
+              <p>orario</p>
+            </div>
+            <div className="col-sm">
+              <h2>DIFF</h2>
+              <p>percentuale</p>
+            </div>
+            <div className="col-sm">
+              <h2 onClick={this.aggiornoStock}><i className="fas fa-sync-alt fa-2x"></i></h2>
+            </div>
           </div>
         </div>
       </div>

@@ -92,7 +92,14 @@ export class App extends Component {
   addPreferiti = ids => {
     // alert(`Hai cliccato l'elemento ${ids}`);
     this.setState({listapreferiti: [...this.state.listapreferiti, this.state.listaelementi[ids]]});
+  };
 
+  eliminoStock = symbol => {
+    const preferiti = this.state.listapreferiti.filter(el => {
+      if (el.symbol !== symbol) return true;
+      return false;
+    });
+    this.setState({listapreferiti: preferiti})
   };
 
   render() {
@@ -105,21 +112,19 @@ export class App extends Component {
             Applicazione Stock Exchange
           </p>  
           <Cerca onInputSearch={this.cercaElementi} />
-          <div className="container">
-            <section className="listanomi">
+          <div className="container-fluid" style={{marginTop: '20px'}}>
+            <section className="col-md-12 listanomi">
               <div className="row">
                 <div className="col">
                   {this.state.inCaricamento && <p className='text-center'>Caricamento in corso ...</p>}
                   {this.state.showAvviso && <p className="text-center">{this.state.msgAvviso}</p>}
                   {this.state.showError && <p className='text-center'>{this.state.msn}</p>}
-                  {this.state.listaelementi?.map((el, idx) => <NomeStock key={idx} dati={el} ids={idx} onAddPreferiti={this.addPreferiti} />)}
+                  {this.state.listaelementi?.map((el, idx) => <NomeStock key={el.symbol} dati={el} ids={idx} onAddPreferiti={this.addPreferiti} />)}
                 </div>
               </div>
             </section>
-            <section className="listapreferiti">
-              <div className="row">
-                  {this.state.listapreferiti.map((el, idx) => <Stock key={idx} dati={el} />)}
-              </div>
+            <section className="listapreferiti row">
+                  {this.state.listapreferiti.map((el, idx) => <Stock key={el.symbol} dati={el} eliminoStock={this.eliminoStock} symbol={el.symbol}/>)}
             </section>
           </div>
         </header>
