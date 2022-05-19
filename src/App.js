@@ -12,7 +12,12 @@ export class App extends Component {
     super(props);
     this.state = {
       listaelementi: [],
-      listapreferiti: []
+      listapreferiti: [],
+      inCaricamento: false,
+      showError: false,
+      msg: '',
+      showAvviso: false,
+      msgAvviso: ''
     }
     console.log(`1g) il costruttore crea la prima istanza Genitore`);
   };
@@ -64,16 +69,30 @@ export class App extends Component {
 
   getElementi = str => {
     const url = `http://api.marketstack.com/v1/eod?access_key=f03cd42f1aeb2bfaa0f1f222c9da1c3a&symbols=${str}&limit=5`;
+    this.setState({ inCaricamento: true, showError: false, showAvviso: false })
     fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        const { data } = res;
-        this.setState({ listaelementi: data })
-        console.log(`Recupero dati ${JSON.stringify(res)}`)
+      .then(r => r.json())
+      .then(r => {
+        const { data= [] } = r;
+        console.log(`Lunghezza oggetto ${data?.length}`)
+        if (data?.length < 1) {
+          this.setState({ showAvviso: true, msgAvviso: 'Spiacente non ho trovato elementi, Riprova!', listaelementi: [] })
+        } else {
+          this.setState({ showAvviso: false, msgAvviso: '' })
+        }
+        this.setState({ listaelementi: data, inCaricamento: false })
+        console.log('Recupero dati ' + JSON.stringify(r))
       })
       .catch((error) => {
-        console.log(`Fetch failed`, error)
+        this.setState({ inCaricamento: false, showError: true, msg: error.message })
+        console.log('Fetch failed', error)
       })
+  };
+
+  addPreferiti = ids => {
+    // alert(`Hai cliccato l'elemento ${ids}`);
+    this.setState({listapreferiti: [...this.state.listapreferiti, this.state.listaelementi[ids]]});
+
   };
 
   render() {
@@ -84,21 +103,22 @@ export class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <p style={{ color: 'gold' }}>
             Applicazione Stock Exchange
-          </p>
+          </p>  
           <Cerca onInputSearch={this.cercaElementi} />
           <div className="container">
             <section className="listanomi">
               <div className="row">
                 <div className="col">
-                  {this.state.listaelementi.map((el, idx)=> <NomeStock key={idx} dati={el} />)}
+                  {this.state.inCaricamento && <p className='text-center'>Caricamento in corso ...</p>}
+                  {this.state.showAvviso && <p className="text-center">{this.state.msgAvviso}</p>}
+                  {this.state.showError && <p className='text-center'>{this.state.msn}</p>}
+                  {this.state.listaelementi?.map((el, idx) => <NomeStock key={idx} dati={el} ids={idx} onAddPreferiti={this.addPreferiti} />)}
                 </div>
               </div>
             </section>
             <section className="listapreferiti">
               <div className="row">
-                <div className="col">
                   {this.state.listapreferiti.map((el, idx) => <Stock key={idx} dati={el} />)}
-                </div>
               </div>
             </section>
           </div>

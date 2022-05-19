@@ -32,7 +32,7 @@ class Stock extends Component {
   render() {
     console.log('2f) FIGLIO Render');
     return (
-      <div className="stock">
+      <div className="stock col-md-6 m-1 p-3">
         <div className="row">
           <div className="col">
             <h2>{this.props.dati.nome}</h2>
