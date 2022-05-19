@@ -3,29 +3,33 @@ import logo from './logo.svg';
 import './css/App.css';
 import Stock from './components/stock/Stock.js';
 import Cerca from './components/Cerca.js';
+import NomeStock from './components/NomeStock.js';
 
 
 export class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { listaStock: [] };
+    this.state = {
+      listaelementi: [],
+      listapreferiti: []
+    }
     console.log(`1g) il costruttore crea la prima istanza Genitore`);
   };
 
   // -------MOUNTING CREAZIONE ----------
-  componentDidMount () {
-    const stock = [
-      {
-        nome: 'APPL',
-        valore: 200
-      },
-      {
-        nome: 'GOOG',
-        valore: 350
-      },
-    ];
-    this.setState({ listaStock: stock });
+  componentDidMount() {
+    // const stock = [
+    //   {
+    //     nome: 'APPL',
+    //     valore: 200
+    //   },
+    //   {
+    //     nome: 'GOOG',
+    //     valore: 350
+    //   },
+    // ];
+    // this.setState({ listaStock: stock });
   };
 
   // --------UPDATE AGGIORNAMENTO--------
@@ -38,32 +42,33 @@ export class App extends Component {
   //   console.log(`4g) DidUpdate padre ${this.state.nome}`)
   // };
 
-  aggiornoStock = (e) => {
-    e.preventDefault()
-    const stock1 = [
-      {
-        nome: 'AMZ',
-        valore: 500
-      },
-      {
-        nome: 'MICROSOFT',
-        valore: 850
-      },
-    ];
-    this.setState({ listaStock: stock1 });
-  };
+  // aggiornoStock = (e) => {
+  //   e.preventDefault()
+  //   const stock1 = [
+  //     {
+  //       nome: 'AMZ',
+  //       valore: 500
+  //     },
+  //     {
+  //       nome: 'MICROSOFT',
+  //       valore: 850
+  //     },
+  //   ];
+  //   this.setState({ listaStock: stock1 });
+  // };
 
   cercaElementi = str => {
-    alert(`Stai cercando ${str}`);
+    // alert(`Stai cercando ${str}`);
     this.getElementi(str);
   };
 
   getElementi = str => {
-    const url = `http://api.marketstack.com/v1/eod?access_key=f03cd42f1aeb2bfaa0f1f222c9da1c3a&symbols=${str}`;
+    const url = `http://api.marketstack.com/v1/eod?access_key=f03cd42f1aeb2bfaa0f1f222c9da1c3a&symbols=${str}&limit=5`;
     fetch(url)
       .then(res => res.json())
       .then(res => {
         const { data } = res;
+        this.setState({ listaelementi: data })
         console.log(`Recupero dati ${JSON.stringify(res)}`)
       })
       .catch((error) => {
@@ -77,16 +82,30 @@ export class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Applicazione Stock Exchange - <a href='/#' onClick={this.aggiornoStock}> Top guadagno Aggiorno </a>
+          <p style={{ color: 'gold' }}>
+            Applicazione Stock Exchange
           </p>
           <Cerca onInputSearch={this.cercaElementi} />
-          { this.state.listaStock.map(el => <Stock key={el.nome} dati={el}/>) }
-          
+          <div className="container">
+            <section className="listanomi">
+              <div className="row">
+                <div className="col">
+                  {this.state.listaelementi.map((el, idx)=> <NomeStock key={idx} dati={el} />)}
+                </div>
+              </div>
+            </section>
+            <section className="listapreferiti">
+              <div className="row">
+                <div className="col">
+                  {this.state.listapreferiti.map((el, idx) => <Stock key={idx} dati={el} />)}
+                </div>
+              </div>
+            </section>
+          </div>
         </header>
       </div>
-    );
-  };
-};
+    )
+  }
+}
 
 export default App
