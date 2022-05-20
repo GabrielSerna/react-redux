@@ -10,7 +10,12 @@ class Stock extends Component {
       symbol,
       price,
       datatrade: 'xxxx-xx-xx 16:00:00',
-      ckrealtime: ''
+      ckrealtime: '',
+      datiGrafico: [{
+        datetime: '16:00:00',
+        price: price
+      }],
+      showgrafico: false
     };
     console.log('1f) FIGLIO Creo istanza');
   };
@@ -40,7 +45,7 @@ class Stock extends Component {
   };
 
   startCheckElemento = () => {
-    this.timer = setInterval(() => this.getNewElementi(), 60000)
+    this.timer = setInterval(() => this.getNewElementi(), 2000)
   };
 
   stopCheckElemento = () => {
@@ -67,14 +72,19 @@ class Stock extends Component {
       .then(r => r.json())
       .then(r => {
         const data = r;
+        const random = Math.ceil(Math.random() * 10) * (Math.round(Math.random()) ? 1 : 1) / 3;
         const datatrade = new Date().toLocaleTimeString();
-        const price = Number(data[0].open);
-        this.setState({ price, datatrade })
-        console.log('Recupero dati ' + JSON.stringify(r))
+        const price = Number(data[0].open + random);
+        const datiGrafico = [...this.state.datiGrafico, {datetime: datatrade.substring(11), price: price} ];
+        this.setState({ price, datatrade, datiGrafico });
       })
       .catch((error) => {
         console.log('Fetch failed', error)
       });
+  };
+
+  showGrafico = () => {
+    this.setState({showgrafico: !this.state.showgrafico});
   };
 
   render() {
@@ -109,7 +119,7 @@ class Stock extends Component {
               <p style={{ color: 'green' }}>{percentuale}%</p>
             </div>
             <div className="col-sm">
-              <p><i className='fas fa-chart-line fa-2x'></i></p>
+              <p><i className='fas fa-chart-line fa-2x' onClick={this.showGrafico}></i></p>
               <label className='bs-switch'>
                 <input type="checkbox" checked={this.state.ckrealtime} onChange={this.startRealtime} />
                 <span className='slider round'></span>
@@ -120,7 +130,7 @@ class Stock extends Component {
         <div className="bodygrafico">
           <div className="row">
             <div className="col-sm">
-              <Grafico data={data} />
+              {this.state.showgrafico && <Grafico data={this.state.datiGrafico} />}
             </div>
           </div>
         </div>
