@@ -68,25 +68,25 @@ export class App extends Component {
   };
 
   getElementi = str => {
-    const url = `http://api.marketstack.com/v1/eod?access_key=f03cd42f1aeb2bfaa0f1f222c9da1c3a&symbols=${str}&limit=5`;
+    const url = `https://lucioticali.it/nasdaqApi/api/v1/search/${str}`;
     this.setState({ inCaricamento: true, showError: false, showAvviso: false })
     fetch(url)
       .then(r => r.json())
       .then(r => {
-        const { data= [] } = r;
+        const data = r;
         console.log(`Lunghezza oggetto ${data?.length}`)
         if (data?.length < 1) {
           this.setState({ showAvviso: true, msgAvviso: 'Spiacente non ho trovato elementi, Riprova!', listaelementi: [] })
         } else {
           this.setState({ showAvviso: false, msgAvviso: '' })
-        }
+        };
         this.setState({ listaelementi: data, inCaricamento: false })
         console.log('Recupero dati ' + JSON.stringify(r))
       })
       .catch((error) => {
         this.setState({ inCaricamento: false, showError: true, msg: error.message })
         console.log('Fetch failed', error)
-      })
+      });
   };
 
   addPreferiti = ids => {
